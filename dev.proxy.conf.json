@@ -1,0 +1,10 @@
+{ 
+  "/internal-api": {
+    "target": "https://dev.devel.nextcaller.com",
+    "secure": false
+  },
+  "/token": {
+    "target": "https://devel.nextcaller.com",
+    "secure": false
+   }
+}
