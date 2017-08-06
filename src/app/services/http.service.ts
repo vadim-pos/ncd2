@@ -1,7 +1,7 @@
 /**
- * HttpService overrides default Angular Http service.
- * It adds authorization header to every http requests containing the authentication token.
- * Setting up at app.module.ts - providers array. 
+ * HttpService extends default Angular Http service.
+ * It adds authorization header containing the authentication token to every http requests.
+ * Sets up at app.module.ts - providers array. 
  */
 
 import { Injectable } from '@angular/core';
