@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
-import { LoginGuard } from './services/login.guard';
+import { LoggingInComponent } from './components/logging-in/logging-in.component';
 
 const routes: Routes = [
     { path: '', children: [
       { path: 'api-usage', component: DashboardComponent },
-      { path: 'login', canActivate: [LoginGuard], component: DashboardComponent },
+      { path: 'login', component: LoggingInComponent },
       { path: 'error', component: ErrorComponent },
       { path: '**', redirectTo: 'api-usage' }
     ] }
@@ -21,8 +21,6 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [
-    LoginGuard
-  ]
+  providers: []
 })
 export class AppRoutingModule {}

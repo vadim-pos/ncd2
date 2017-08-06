@@ -13,17 +13,18 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { AppComponent } from './components/app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LoggingInComponent } from './components/logging-in/logging-in.component';
 
 /*--------- Services ---------*/
 import { Http, RequestOptions, XHRBackend } from '@angular/http';
 import { HttpService } from './services/http.service';
-import { LoginGuard } from './services/login.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    ErrorComponent
+    ErrorComponent,
+    LoggingInComponent
   ],
   imports: [
     BrowserModule,
