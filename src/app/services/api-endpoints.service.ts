@@ -1,4 +1,4 @@
-export class ApiEndpoints {
+export class ApiEndpointsService {
   public TOKEN = '/token/';
   public GRAPH_DATA = '/internal-api/api-usage/';
   public MAP_DATA = '/internal-api/api-usage-map/';
@@ -16,7 +16,7 @@ export class ApiEndpoints {
   public BILLING_BANK_ACCOUNT = '/internal-api/billing/bank-accounts/';
   public FRAUD = '/internal-api/fraud/stats/';
   public HELP = '/internal-api/account/message/fraud-help/';
-  public LOGOUT = '/logout/';
+  // public LOGOUT = '/logout/';
   public GET_PLATFORM_USERS = '/internal-api/platform-users/';
   public GET_PLATFORM_ACCOUNT = '/profile-api/status-line-info/';
   public DOCUMENTATION = '/documentation/';

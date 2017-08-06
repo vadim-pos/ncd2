@@ -18,6 +18,8 @@ import { LoggingInComponent } from './components/logging-in/logging-in.component
 /*--------- Services ---------*/
 import { Http, RequestOptions, XHRBackend } from '@angular/http';
 import { HttpService } from './services/http.service';
+import { AuthService } from './services/auth.service';
+import { ApiEndpointsService } from './services/api-endpoints.service';
 
 @NgModule({
   declarations: [
@@ -35,12 +37,14 @@ import { HttpService } from './services/http.service';
   ],
   providers: [
     HttpService,
+    AuthService,
+    ApiEndpointsService,
     // {
     //   provide: Http,
     //   useFactory: (backend: XHRBackend, options: RequestOptions) => new HttpService(backend, options),
     //   deps: [XHRBackend, RequestOptions]
     // },
-    { provide: Http, useClass: HttpService },
+    { provide: HttpService, useClass: HttpService },
   ],
   bootstrap: [AppComponent]
 })

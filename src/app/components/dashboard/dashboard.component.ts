@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IMyDpOptions } from 'mydatepicker';
 import { Http, Response } from '@angular/http';
+
+import { ActivatedRoute } from '@angular/router';
+
 import { HttpService } from '../../services/http.service';
+import { ApiEndpointsService } from '../../services/api-endpoints.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +22,7 @@ import { HttpService } from '../../services/http.service';
       </div>
     </form>
     <button (click)="makeRequest()">Request</button>
+    <button (click)="makeTokenRequest()">Token Request</button>
   `,
   styleUrls: ['./dashboard.component.scss']
 })
@@ -34,12 +39,16 @@ export class DashboardComponent implements OnInit {
     date: { year: 2019, month: 10, day: 9 }
   };
 
-  constructor(private httpService: HttpService, private http: Http) { }
+  constructor(private httpService: HttpService, private endpoints: ApiEndpointsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    console.log(this.route.snapshot.data);
   }
 
   makeRequest() {    
-    this.http.get('/internal-api/account/').map((response: Response) => response.json()).subscribe((data) => console.log(data));
+    this.httpService.get('/internal-api/account/').map((response: Response) => response.json()).subscribe((data) => console.log(data));
+  }
+  makeTokenRequest() {    
+    this.httpService.get(this.endpoints.TOKEN).map((response: Response) => response.json()).subscribe((data) => console.log(data));
   }
 }
