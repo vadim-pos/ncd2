@@ -1,10 +1,11 @@
+/*--------- Angular Modules ---------*/
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { AppRoutingModule } from './app-routing.module';
 
-/*--------- Modules ---------*/
+/*--------- Vendor Modules ---------*/
 /* Datepicker module 'mydatepicker', source: https://github.com/kekeh/mydatepicker */
 import { MyDatePickerModule } from 'mydatepicker'; 
 
@@ -18,9 +19,6 @@ import { Http, RequestOptions, XHRBackend } from '@angular/http';
 import { HttpService } from './services/http.service';
 import { LoginGuard } from './services/login.guard';
 
-/*--------- Routes ---------*/
-import { routes } from './routes';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +29,7 @@ import { routes } from './routes';
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
     MyDatePickerModule
   ],
   providers: [
@@ -42,7 +40,6 @@ import { routes } from './routes';
     //   deps: [XHRBackend, RequestOptions]
     // },
     { provide: Http, useClass: HttpService },
-    LoginGuard
   ],
   bootstrap: [AppComponent]
 })
