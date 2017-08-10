@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   constructor(private httpService: HttpService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(this.route.snapshot.data);
+    console.log(this.route.snapshot.data.profile);
   }
 
   makeRequest() {    
