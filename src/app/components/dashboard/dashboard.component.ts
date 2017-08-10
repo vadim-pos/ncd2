@@ -5,7 +5,7 @@ import { Http, Response } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { HttpService } from '../../services/http.service';
-import { ApiEndpointsService } from '../../services/api-endpoints.service';
+import { ApiEndpoints } from '../../api-endpoints';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
     date: { year: 2019, month: 10, day: 9 }
   };
 
-  constructor(private httpService: HttpService, private endpoints: ApiEndpointsService, private route: ActivatedRoute) { }
+  constructor(private httpService: HttpService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     console.log(this.route.snapshot.data);
@@ -49,6 +49,6 @@ export class DashboardComponent implements OnInit {
     this.httpService.get('/internal-api/account/').map((response: Response) => response.json()).subscribe((data) => console.log(data));
   }
   makeTokenRequest() {    
-    this.httpService.get(this.endpoints.TOKEN).map((response: Response) => response.json()).subscribe((data) => console.log(data));
+    this.httpService.get(ApiEndpoints.TOKEN).map((response: Response) => response.json()).subscribe((data) => console.log(data));
   }
 }

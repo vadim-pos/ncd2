@@ -4,15 +4,15 @@ import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { HttpService } from '../http.service';
-import { ApiEndpointsService } from '../api-endpoints.service';
+import { ApiEndpoints } from '../../api-endpoints';
 
 @Injectable()
 export class ProfileDataResolver implements Resolve<any> {
 
-  constructor(private httpService: HttpService, private endpoints: ApiEndpointsService) { }
+  constructor(private httpService: HttpService) { }
 
   resolve(): Observable<any> {
-    return this.httpService.get(this.endpoints.PROFILE_DATA).map((response: Response) => response.json());
+    return this.httpService.get(ApiEndpoints.PROFILE_DATA).map((response: Response) => response.json());
   }
 
 }

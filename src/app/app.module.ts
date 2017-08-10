@@ -5,21 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
-/*--------- Vendor Modules ---------*/
-/* Datepicker module 'mydatepicker', source: https://github.com/kekeh/mydatepicker */
+/*--------------------- Vendor Modules ---------------------*/
+// Datepicker module 'mydatepicker', source: https://github.com/kekeh/mydatepicker 
 import { MyDatePickerModule } from 'mydatepicker'; 
 
-/*--------- Components ---------*/
+/*--------------------- Components ---------------------*/
 import { AppComponent } from './components/app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoggingInComponent } from './components/logging-in/logging-in.component';
 
-/*--------- Services ---------*/
+/*--------------------- Services ---------------------*/
 import { Http, RequestOptions, XHRBackend } from '@angular/http';
 import { HttpService } from './services/http.service';
 import { AuthService } from './services/auth.service';
-import { ApiEndpointsService } from './services/api-endpoints.service';
 
 @NgModule({
   declarations: [
@@ -37,14 +36,13 @@ import { ApiEndpointsService } from './services/api-endpoints.service';
   ],
   providers: [
     HttpService,
-    AuthService,
-    ApiEndpointsService,
+    AuthService
     // {
     //   provide: Http,
     //   useFactory: (backend: XHRBackend, options: RequestOptions) => new HttpService(backend, options),
     //   deps: [XHRBackend, RequestOptions]
     // },
-    { provide: HttpService, useClass: HttpService },
+    // { provide: HttpService, useClass: HttpService },
   ],
   bootstrap: [AppComponent]
 })
