@@ -21,13 +21,15 @@ import { LoggingInComponent } from './components/logging-in/logging-in.component
 import { HttpService } from './services/http.service';
 import { AppDataService } from './services/app-data.service';
 import { AuthService } from './services/auth.service';
+import { BaseComponent } from './components/base/base.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     ErrorComponent,
-    LoggingInComponent
+    LoggingInComponent,
+    BaseComponent
   ],
   imports: [
     BrowserModule,
