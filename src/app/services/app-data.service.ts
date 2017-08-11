@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import "rxjs/add/observable/of";
 
 import { ApiEndpoints } from '../api-endpoints';
 import { HttpService } from '../services/http.service';
@@ -29,7 +30,7 @@ export class AppDataService {
         // redirect if user was not authenticated
         if (err.status === 401 || err.status === 403) {
           this.router.navigate(['/error']);
-          return null;
+          return Observable.of(null);
         }
       });
   }
