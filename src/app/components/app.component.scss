@@ -11,6 +11,10 @@
   background-color: $bg-black;
 }
 
+.main-content {
+  flex: 1 0 auto;
+}
+
 .company-name {
   font-size: 1rem;
   font-weight: 400;

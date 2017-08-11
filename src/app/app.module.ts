@@ -7,7 +7,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 /*--------------------- Vendor Modules ---------------------*/
 // Datepicker module 'mydatepicker', source: https://github.com/kekeh/mydatepicker 
-import { MyDatePickerModule } from 'mydatepicker'; 
+import { MyDatePickerModule } from 'mydatepicker';
+// AmCharts module https://github.com/amcharts/amcharts3-angular2
+import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 /*--------------------- Components ---------------------*/
 import { AppComponent } from './components/app.component';
@@ -32,7 +34,8 @@ import { AuthService } from './services/auth.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    AmChartsModule
   ],
   providers: [
     HttpService,
