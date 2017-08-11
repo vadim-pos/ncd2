@@ -45,8 +45,9 @@ export class AppDataService {
   }
 
   /* ----- fetching / getting charts data ----- */
+  /* !!!!!!!!! TODO create chartsData interfaces !!!!!!!!! */
 
-  fetchChartsData(fromDate: Date, toDate: Date): Observable<any> {
+  fetchChartsData(fromDate: Date, toDate: Date): Observable<any> { /* !!!!!!!!! TODO update types with new interfaces !!!!!!!!! */
     const params = { end_date: toDate.toISOString(), start_date: fromDate.toISOString() };
 
     return Observable.forkJoin(
