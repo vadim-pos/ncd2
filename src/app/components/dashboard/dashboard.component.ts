@@ -8,7 +8,7 @@ import { AmChartsService } from "@amcharts/amcharts3-angular";
 import { AppDataService } from '../../services/app-data.service';
 import { HttpService } from '../../services/http.service';
 import { ApiEndpoints } from '../../api-endpoints';
-import { Profile } from '../../interfaces/profile';
+import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,8 +33,10 @@ import { Profile } from '../../interfaces/profile';
 export class DashboardComponent implements OnInit {
 
   profile: Profile = null;
+  chartsData: ChartsData = null;
+  mapData: MapData = null;
+  graphData: GraphData = null;
   dates: { profileStart?: Date, monthAgo?: Date, from?: Date, to?: Date } = {};
-  chartsData = {};
 
   constructor(private httpService: HttpService, private route: ActivatedRoute, private AmCharts: AmChartsService, private appDataService: AppDataService) { }
 
@@ -49,9 +51,12 @@ export class DashboardComponent implements OnInit {
     this.dates.to = new Date();
 
     this.appDataService.fetchChartsData(this.dates.from, this.dates.to).subscribe(
-      data => console.log(data)
+      data => {
+        this.chartsData = data.chartsData;
+        this.mapData = data.mapData;
+        this.graphData = data.graphData;
+      }
     );
-
   }
 
   makeRequest() {    

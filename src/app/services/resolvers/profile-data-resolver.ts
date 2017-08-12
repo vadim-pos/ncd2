@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { HttpService } from '../http.service';
 import { AppDataService } from '../app-data.service';
-import { Profile } from '../../interfaces/profile';
+import { Profile } from '../../interfaces';
 
 @Injectable()
 export class ProfileDataResolver implements Resolve<any> {

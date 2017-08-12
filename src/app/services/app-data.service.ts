@@ -1,6 +1,8 @@
 /**
- * AppDataService responsible for fetching application data from backend via fetch[*]-methods.
- * Storing data. Providing access to already fetched data via get[*]-methods.
+ * AppDataService responsible for: 
+ * 1) fetching application data from backend via fetch[*data-type]-methods.
+ * 2) storing data and providing access to already fetched data via get[*data-type]-methods.
+ * 3) pushing data to server via set[*data-type]-methods.
  */
 
 import { Injectable } from '@angular/core';
@@ -13,12 +15,12 @@ import "rxjs/add/observable/forkJoin";
 
 import { ApiEndpoints } from '../api-endpoints';
 import { HttpService } from '../services/http.service';
-import { Profile } from '../interfaces/profile';
+import { Profile, ChartsData, GraphData, MapData } from '../interfaces';
 
 @Injectable()
 export class AppDataService {
   profileData: Profile = null;
-  chartsData: { graphData?: any, mapData?: any, chartData?: any } = {};
+  chartsData: { graphData?: GraphData, mapData?: MapData, chartsData?: ChartsData } = {};
 
   constructor(private httpService: HttpService, private router: Router) {  }
 
@@ -45,9 +47,9 @@ export class AppDataService {
   }
 
   /* ----- fetching / getting charts data ----- */
-  /* !!!!!!!!! TODO create chartsData interfaces !!!!!!!!! */
+  /* !!!!!!!!! TODO update chartsData interfaces !!!!!!!!! */
 
-  fetchChartsData(fromDate: Date, toDate: Date): Observable<any> { /* !!!!!!!!! TODO update types with new interfaces !!!!!!!!! */
+  fetchChartsData(fromDate: Date, toDate: Date): Observable<{graphData?: GraphData, mapData?: MapData, chartsData?: ChartsData}> {
     const params = { end_date: toDate.toISOString(), start_date: fromDate.toISOString() };
 
     return Observable.forkJoin(
@@ -57,7 +59,7 @@ export class AppDataService {
     ).map(data => {
       this.chartsData.graphData = data[0];
       this.chartsData.mapData = data[1];
-      this.chartsData.chartData = data[2];
+      this.chartsData.chartsData = data[2];
       return this.chartsData;
     });
   }
