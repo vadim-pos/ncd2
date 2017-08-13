@@ -28,11 +28,7 @@ export class AppDataService {
 
   fetchProfileData(): Observable<Profile> | null {
     return this.httpService.get(ApiEndpoints.PROFILE_DATA)
-      .map((res: Response) => {
-        const profileData = res.json();
-        this.profileData = profileData;
-        return profileData;
-      })
+      .map((res: Response) => this.profileData = res.json())
       .catch((err: Response) => {
         // redirect if user was not authenticated
         if (err.status === 401 || err.status === 403) {

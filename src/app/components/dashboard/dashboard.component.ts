@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http'; // !!!!!!!!!!!!!!!
+import { Http, Response } from '@angular/http'; // !!!!!!!!!!!!!!! TO DELETE
 import { ActivatedRoute } from '@angular/router';
 
 import { IMyDpOptions } from 'mydatepicker';
 import { AmChartsService } from "@amcharts/amcharts3-angular";
-
+import * as moment from 'moment';
 import { AppDataService } from '../../services/app-data.service';
 import { HttpService } from '../../services/http.service';
 import { ApiEndpoints } from '../../api-endpoints';
@@ -24,43 +24,163 @@ import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
         <my-date-picker name="endDate" [options]="myDatePickerOptions" [(ngModel)]="endDate" required></my-date-picker>
       </div>
     </form>
-    <button (click)="makeRequest()">Request</button>
 
-    <div id="main-dashboard-chart" [style.width.%]="100" [style.height.px]="500"></div>
+    <div id="main-chart" [style.width.%]="100" [style.height.px]="500"></div>
   `,
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
   profile: Profile = null;
   chartsData: ChartsData = null;
   mapData: MapData = null;
   graphData: GraphData = null;
-  dates: { profileStart?: Date, monthAgo?: Date, from?: Date, to?: Date } = {};
+
+  mainChart: any = null;
+  dates: { profileStart?: Date, from?: Date, to?: Date } = {};
 
   constructor(private httpService: HttpService, private route: ActivatedRoute, private AmCharts: AmChartsService, private appDataService: AppDataService) { }
 
   ngOnInit() {
-    const now = new Date();
+    const oneMonthAgo = new Date(moment().subtract(1, 'month').format());
 
     this.profile = this.appDataService.getProfileData();
-
     this.dates.profileStart = new Date(this.profile.initial_date);
-    this.dates.monthAgo = new Date(now.setMonth(now.getMonth() - 1));
-    this.dates.from = new Date(this.dates.profileStart > this.dates.monthAgo ? + this.dates.profileStart : +this.dates.monthAgo);
+    this.dates.from = new Date((this.dates.profileStart > oneMonthAgo) ? +this.dates.profileStart : +oneMonthAgo);
     this.dates.to = new Date();
 
-    this.appDataService.fetchChartsData(this.dates.from, this.dates.to).subscribe(
-      data => {
-        this.chartsData = data.chartsData;
-        this.mapData = data.mapData;
-        this.graphData = data.graphData;
-      }
-    );
+    this.appDataService.fetchChartsData(this.dates.from, this.dates.to)
+      .subscribe(({chartsData, mapData, graphData }) => {
+          this.chartsData = chartsData;
+          this.mapData = mapData;
+          this.graphData = graphData;
+          console.log(this.chartsData, this.mapData, this.graphData);
+
+          this.prepareMainChartData();
+          this.drawMainChart();
+        }
+      );
   }
 
-  makeRequest() {    
-    this.httpService.get('/internal-api/account/').map((response: Response) => response.json()).subscribe((data) => console.log(data));
+  prepareMainChartData() {
+    // const result: any[] = [];
+
+    // const planTypesOrder = ["phone", "email", "name_address", "fraud", "profile", "cra", "p3", "validate"];
+    // const keyNames = {
+    //   phone: "Phone ID",
+    //   fraud: 'Fraud ID',
+    //   email: 'Email ID',
+    //   cra: 'CRA ID',
+    //   p3: 'P3 ID',
+    //   validate: 'Validate',
+    //   profile: 'Profile ID',
+    //   name_address: 'Name & Address ID'
+    // };
+
+    console.log(this.extractMainChartDataValues('phone'));
+  }
+
+  extractMainChartDataValues(type: string): { date:string, value: number }[] {
+    const datesDiffInDays = moment(this.dates.to).diff(this.dates.from, 'days') + 1;
+
+    return Array.from(Array(datesDiffInDays).keys()).map(i => {
+      const day = moment(this.dates.from).add(i, 'day');
+      const dayFormatted = day.format('YYYY-MM-DD');
+      const value = this.graphData.range_report[dayFormatted]
+        && this.graphData.range_report[dayFormatted][type]
+        && this.graphData.range_report[dayFormatted][type].requests_count || 0;
+      return { date: dayFormatted, value };
+    });
+  }
+
+  drawMainChart() {
+    this.mainChart = this.AmCharts.makeChart('main-chart', {
+      "type": "serial",
+      "theme": "light",
+      "marginRight": 40,
+      "marginLeft": 40,
+      "autoMarginOffset": 20,
+      "mouseWheelZoomEnabled": true,
+      "dataDateFormat": "YYYY-MM-DD",
+
+      // "valueAxes": [{
+      //   "id": "v1",
+      //   "axisAlpha": 0,
+      //   "position": "right",
+      //   "ignoreAxisWidth":true
+      // }],
+      "valueAxes": [],
+
+      "balloon": {
+        "borderThickness": 1,
+        "shadowAlpha": 0
+      },
+
+      "graphs": [{
+        "id": "g1",
+        "balloon":{
+          "drop":true,
+          "adjustBorderColor":false,
+          "color":"#ffffff"
+        },
+        "bullet": "round",
+        "bulletBorderAlpha": 1,
+        "bulletColor": "#FFFFFF",
+        "bulletSize": 5,
+        "hideBulletsCount": 50,
+        "lineThickness": 2,
+        "title": "red line",
+        "useLineColorForBulletBorder": true,
+        "valueField": "value",
+        "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+      }],
+
+      "chartScrollbar": {
+        "graph": "g1",
+        "oppositeAxis":false,
+        "offset":30,
+        "scrollbarHeight": 80,
+        "backgroundAlpha": 0,
+        "selectedBackgroundAlpha": 0.1,
+        "selectedBackgroundColor": "#888888",
+        "graphFillAlpha": 0,
+        "graphLineAlpha": 0.5,
+        "selectedGraphFillAlpha": 0,
+        "selectedGraphLineAlpha": 1,
+        "autoGridCount":true,
+        "color":"#AAAAAA"
+      },
+
+      "chartCursor": {
+        "pan": true,
+        "valueLineEnabled": true,
+        "valueLineBalloonEnabled": true,
+        "cursorAlpha":1,
+        "cursorColor":"#258cbb",
+        "limitToGraph":"g1",
+        "valueLineAlpha":0.2,
+        "valueZoomable":true
+      },
+
+      "valueScrollbar":{
+        "oppositeAxis":false,
+        "offset":50,
+        "scrollbarHeight":10
+      },
+
+      "categoryField": "date",
+      "categoryAxis": {
+        "parseDates": true,
+        "dashLength": 1,
+        "minorGridEnabled": true
+      },
+
+      "export": {
+        "enabled": true
+      },
+
+      "dataProvider": this.extractMainChartDataValues('phone'),
+
+    });
   }
 
 
