@@ -13,6 +13,7 @@ import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 /*--------------------- Components ---------------------*/
 import { AppComponent } from './components/app.component';
+import { BaseComponent } from './components/base/base.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoggingInComponent } from './components/logging-in/logging-in.component';
@@ -21,7 +22,7 @@ import { LoggingInComponent } from './components/logging-in/logging-in.component
 import { HttpService } from './services/http.service';
 import { AppDataService } from './services/app-data.service';
 import { AuthService } from './services/auth.service';
-import { BaseComponent } from './components/base/base.component';
+import { ChartsConfigurationService } from './services/charts-configuration.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { BaseComponent } from './components/base/base.component';
   providers: [
     HttpService,
     AuthService,
-    AppDataService
+    AppDataService,
+    ChartsConfigurationService
     // {
     //   provide: Http,
     //   useFactory: (backend: XHRBackend, options: RequestOptions) => new HttpService(backend, options),
