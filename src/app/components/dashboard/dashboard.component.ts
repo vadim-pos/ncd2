@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Http, Response } from '@angular/http'; // !!!!!!!!!!!!!!! TO DELETE
+// import { Http, Response } from '@angular/http'; // !!!!!!!!!!!!!!! TO DELETE
 
 import { IMyDpOptions } from 'mydatepicker';
-import { AmChartsService } from "@amcharts/amcharts3-angular";
+// import { AmChartsService } from "@amcharts/amcharts3-angular";
 import * as moment from 'moment';
-import { AppDataService } from '../../services/app-data.service';
+
 import { HttpService } from '../../services/http.service';
+import { AppDataService } from '../../services/app-data.service';
 import { ChartsConfigurationService } from '../../services/charts-configuration.service';
 import { ApiEndpoints } from '../../api-endpoints';
 import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
@@ -24,7 +25,7 @@ import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
         <my-date-picker name="endDate" [options]="myDatePickerOptions" [(ngModel)]="endDate" required></my-date-picker>
       </div>
     </form>
-    <div id="main-chart" [style.width.%]="99" [style.height.px]="500"></div>
+    <app-main-chart *ngIf="chartsDataLoaded" [availablePlanTypes]="graphData.available_types" [chartData]="extractMainChartDataValues()"></app-main-chart>
   `,
   styleUrls: ['./dashboard.component.scss']
 })
@@ -34,10 +35,13 @@ export class DashboardComponent implements OnInit {
   mapData: MapData = null;
   graphData: GraphData = null;
 
+  // flag for checking loading status of charts data. Used for triggering rendering of the <app-main-chart> component
+  chartsDataLoaded: boolean = false;
+
   mainChart: any = null;
   dates: { profileStart?: Date, from?: Date, to?: Date } = {};
 
-  constructor(private httpService: HttpService, private AmCharts: AmChartsService, private appDataService: AppDataService, private chartsConfiguration: ChartsConfigurationService) { }
+  constructor(private httpService: HttpService, /*private AmCharts: AmChartsService,*/ private appDataService: AppDataService, private chartsConfiguration: ChartsConfigurationService) { }
 
   ngOnInit() {
     const oneMonthAgo = new Date(moment().subtract(1, 'month').format());
@@ -53,8 +57,9 @@ export class DashboardComponent implements OnInit {
           this.mapData = mapData;
           this.graphData = graphData;
           console.log(this.chartsData, this.mapData, this.graphData);
-
-          this.drawMainChart();
+          this.chartsDataLoaded = true;
+          
+          // this.drawMainChart();
         }
       );
   }
@@ -81,7 +86,8 @@ export class DashboardComponent implements OnInit {
 
 
   drawMainChart() {
-    this.mainChart = this.AmCharts.makeChart('main-chart', this.chartsConfiguration.getMainChartConfiguration(this.graphData.available_types, this.extractMainChartDataValues()));
+    // this.chartsConfiguration.createMainChart('main-chart', this.graphData.available_types, this.extractMainChartDataValues());
+    // this.mainChart = this.AmCharts.makeChart('main-chart', this.chartsConfiguration.getMainChartConfiguration(this.graphData.available_types, this.extractMainChartDataValues()));
   }
 
 

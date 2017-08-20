@@ -17,6 +17,7 @@ import { BaseComponent } from './components/base/base.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoggingInComponent } from './components/logging-in/logging-in.component';
+import { MainChartComponent } from './components/dashboard/main-chart/main-chart.component';
 
 /*--------------------- Services ---------------------*/
 import { HttpService } from './services/http.service';
@@ -30,7 +31,8 @@ import { ChartsConfigurationService } from './services/charts-configuration.serv
     DashboardComponent,
     ErrorComponent,
     LoggingInComponent,
-    BaseComponent
+    BaseComponent,
+    MainChartComponent
   ],
   imports: [
     BrowserModule,
