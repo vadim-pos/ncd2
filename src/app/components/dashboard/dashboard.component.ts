@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-// import { Http, Response } from '@angular/http'; // !!!!!!!!!!!!!!! TO DELETE
 
 import { IMyDpOptions } from 'mydatepicker';
-// import { AmChartsService } from "@amcharts/amcharts3-angular";
 import * as moment from 'moment';
 
 import { HttpService } from '../../services/http.service';
 import { AppDataService } from '../../services/app-data.service';
-import { ChartsConfigurationService } from '../../services/charts-configuration.service';
 import { ApiEndpoints } from '../../api-endpoints';
 import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
 
@@ -35,13 +32,13 @@ export class DashboardComponent implements OnInit {
   mapData: MapData = null;
   graphData: GraphData = null;
 
-  // flag for checking loading status of charts data. Used for triggering rendering of the <app-main-chart> component
+  // charts data loading status flag . Used for start rendering of the <app-main-chart> component
   chartsDataLoaded: boolean = false;
 
   mainChart: any = null;
   dates: { profileStart?: Date, from?: Date, to?: Date } = {};
 
-  constructor(private httpService: HttpService, /*private AmCharts: AmChartsService,*/ private appDataService: AppDataService, private chartsConfiguration: ChartsConfigurationService) { }
+  constructor(private httpService: HttpService, private appDataService: AppDataService) { }
 
   ngOnInit() {
     const oneMonthAgo = new Date(moment().subtract(1, 'month').format());
@@ -56,10 +53,8 @@ export class DashboardComponent implements OnInit {
           this.chartsData = chartsData;
           this.mapData = mapData;
           this.graphData = graphData;
-          console.log(this.chartsData, this.mapData, this.graphData);
           this.chartsDataLoaded = true;
-          
-          // this.drawMainChart();
+          console.log(this.chartsData, this.mapData, this.graphData);
         }
       );
   }
@@ -82,12 +77,6 @@ export class DashboardComponent implements OnInit {
 
       return { ...dataValues, date: dayFormatted };
     });
-  }
-
-
-  drawMainChart() {
-    // this.chartsConfiguration.createMainChart('main-chart', this.graphData.available_types, this.extractMainChartDataValues());
-    // this.mainChart = this.AmCharts.makeChart('main-chart', this.chartsConfiguration.getMainChartConfiguration(this.graphData.available_types, this.extractMainChartDataValues()));
   }
 
 

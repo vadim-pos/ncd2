@@ -5,3 +5,31 @@ body, html {
 body {
   font-family: Open Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,Arial,sans-serif;
 }
+
+
+/* ----- amcharts additional styles ----- */
+
+.amcharts-graph-bullet {
+  transition: all .3s ease-out;
+  -webkit-transition: all .3s ease-out;
+  -moz-transition: all .3s ease-out;
+  -o-transition: all .3s ease-out;
+}
+
+.amcharts-graph-bullet:hover {
+  animation: am-pulsating .8s infinite;
+  // fill-opacity: 0.8;
+  // stroke-opacity: 1;
+  // stroke-width: 10px;
+}
+
+@keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 30px;
+  }
+}

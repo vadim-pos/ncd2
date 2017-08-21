@@ -23,7 +23,6 @@ import { MainChartComponent } from './components/dashboard/main-chart/main-chart
 import { HttpService } from './services/http.service';
 import { AppDataService } from './services/app-data.service';
 import { AuthService } from './services/auth.service';
-import { ChartsConfigurationService } from './services/charts-configuration.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +45,6 @@ import { ChartsConfigurationService } from './services/charts-configuration.serv
     HttpService,
     AuthService,
     AppDataService,
-    ChartsConfigurationService
     // {
     //   provide: Http,
     //   useFactory: (backend: XHRBackend, options: RequestOptions) => new HttpService(backend, options),
