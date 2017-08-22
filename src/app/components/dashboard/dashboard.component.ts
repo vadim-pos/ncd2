@@ -22,7 +22,12 @@ import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
         <my-date-picker name="endDate" [options]="myDatePickerOptions" [(ngModel)]="endDate" required></my-date-picker>
       </div>
     </form>
-    <app-main-chart *ngIf="chartsDataLoaded" [availablePlanTypes]="graphData.available_types" [chartData]="extractMainChartDataValues()"></app-main-chart>
+
+    <app-main-chart *ngIf="chartsDataLoaded" [availablePlanTypes]="graphData.available_types" [chartData]="extractMainChartData()"></app-main-chart>
+    
+    <div class="small-charts-wrapper">
+      <app-round-chart [chartID]="'gender'"></app-round-chart>
+    </div>
   `,
   styleUrls: ['./dashboard.component.scss']
 })
@@ -32,7 +37,7 @@ export class DashboardComponent implements OnInit {
   mapData: MapData = null;
   graphData: GraphData = null;
 
-  // charts data loading status flag . Used for start rendering of the <app-main-chart> component
+  // charts data loading status flag. Used for start rendering of the <app-main-chart> component
   chartsDataLoaded: boolean = false;
 
   mainChart: any = null;
@@ -60,7 +65,7 @@ export class DashboardComponent implements OnInit {
   }
 
   /* creates array of data objects for main chart */
-  extractMainChartDataValues(): any[] {
+  extractMainChartData(): any[] {
     const dataValues = {};
     const datesDiffInDays = moment(this.dates.to).diff(this.dates.from, 'days') + 1;
 

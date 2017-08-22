@@ -60,7 +60,7 @@ export class MainChartComponent implements OnInit {
   selectedGraphItem: any;
   selectedCursorData: any;
 
-  constructor(/*private renderer: Renderer2,*/ private AmCharts: AmChartsService, /*private changeDetector: ChangeDetectorRef*/) { }
+  constructor(private AmCharts: AmChartsService) { }
 
   ngOnInit() {
     const chartConfiguration = this.getChartConfiguration(this.availablePlanTypes, this.chartData);

@@ -23,6 +23,7 @@ import { MainChartComponent } from './components/dashboard/main-chart/main-chart
 import { HttpService } from './services/http.service';
 import { AppDataService } from './services/app-data.service';
 import { AuthService } from './services/auth.service';
+import { RoundChartComponent } from './components/dashboard/round-chart/round-chart.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthService } from './services/auth.service';
     ErrorComponent,
     LoggingInComponent,
     BaseComponent,
-    MainChartComponent
+    MainChartComponent,
+    RoundChartComponent
   ],
   imports: [
     BrowserModule,
