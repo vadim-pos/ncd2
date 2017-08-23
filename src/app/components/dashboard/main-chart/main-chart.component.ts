@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 import { AmChartsService } from "@amcharts/amcharts3-angular";
 
 @Component({
@@ -24,7 +24,7 @@ import { AmChartsService } from "@amcharts/amcharts3-angular";
   `,
   styleUrls: ['./main-chart.component.scss']
 })
-export class MainChartComponent implements OnInit {
+export class MainChartComponent implements OnInit, OnDestroy {
   @Input() availablePlanTypes: string[];
   @Input() chartData: any[];
   balloonStyles = { position:'absolute', top:'0', left:'0' };
@@ -157,6 +157,12 @@ export class MainChartComponent implements OnInit {
     }
 
     this.balloonStyles = { ...this.balloonStyles, top: `${top}px`, left: `${left}px` };
+  }
+
+  ngOnDestroy() {
+    if (this.mainChart) {
+      this.AmCharts.destroyChart(this.mainChart);
+    }
   }
 
 }

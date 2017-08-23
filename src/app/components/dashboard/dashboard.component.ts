@@ -25,8 +25,8 @@ import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
 
     <app-main-chart *ngIf="chartsDataLoaded" [availablePlanTypes]="graphData.available_types" [chartData]="extractMainChartData()"></app-main-chart>
     
-    <div class="small-charts-wrapper">
-      <app-round-chart [chartID]="'gender'"></app-round-chart>
+    <div *ngIf="chartsDataLoaded" class="small-charts-wrapper">
+      <app-round-chart *ngFor="let type of roundChartsTypes" [chartID]="type" [chartData]="extractRoundChartData(type)"></app-round-chart>
     </div>
   `,
   styleUrls: ['./dashboard.component.scss']
@@ -36,6 +36,16 @@ export class DashboardComponent implements OnInit {
   chartsData: ChartsData = null;
   mapData: MapData = null;
   graphData: GraphData = null;
+
+  roundChartsTypes = ['gender', 'tech_savvy', 'married', 'has_kids', 'wealthy'];
+  
+  roundChartsMap: {[type: string]: {values: string[]} | null} = {
+    'gender': { values: ['Male', 'Female'] },
+    'tech_savvy': { values: ['tech_savvy'] },
+    'married': { values: ['Married', 'Single'] },
+    'has_kids': { values: ['has_kids'] },
+    'wealthy': { values: ['wealthy'] }
+  };
 
   // charts data loading status flag. Used for start rendering of the <app-main-chart> component
   chartsDataLoaded: boolean = false;
@@ -55,11 +65,13 @@ export class DashboardComponent implements OnInit {
 
     this.appDataService.fetchChartsData(this.dates.from, this.dates.to)
       .subscribe(({chartsData, mapData, graphData }) => {
-          this.chartsData = chartsData;
+          this.chartsData = chartsData.charts_data;
           this.mapData = mapData;
           this.graphData = graphData;
           this.chartsDataLoaded = true;
           console.log(this.chartsData, this.mapData, this.graphData);
+
+          // console.log(this.extractRoundChartData('gender'));
         }
       );
   }
@@ -84,6 +96,28 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  /* creates data object for round chart of specific type */
+  extractRoundChartData(chartType: string): {[category:string]: number} {
+    let extractedData = {};
+
+    Object.keys(this.chartsData).forEach(planType => {
+      const chartData = this.chartsData[planType][chartType];
+      if (!chartData) { return };
+
+      this.roundChartsMap[chartType].values.forEach((value, i, arr) => {
+        const dataValue = chartData.values[value];
+        const totalCount = chartData.calls_count;
+
+        extractedData[value] = extractedData[value] ? extractedData[value] + dataValue : dataValue;
+        // if chart data contains only one item - set second item as 'other' with value of total calls count for this data type
+        if (arr.length === 1) {
+          extractedData['other'] = extractedData['other'] ? extractedData['other'] + (totalCount - dataValue) : totalCount - dataValue;
+        }
+      });
+    });
+    
+    return extractedData;
+  }
 
   // myDatePickerOptions: IMyDpOptions = {
   //   dateFormat: 'mmm dd, yyyy',
