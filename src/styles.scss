@@ -11,6 +11,11 @@ body {
 }
 
 
+/* ----------- GLOBAL STYLES IMPORTS ----------- */
+// nvd3 charts styles
+@import '../node_modules/nvd3/build/nv.d3.min.css';
+
+
 /* ----- amcharts additional styles ----- */
 
 .amcharts-graph-bullet {

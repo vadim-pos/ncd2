@@ -70,29 +70,52 @@ export class DashboardComponent implements OnInit {
           this.graphData = graphData;
           this.chartsDataLoaded = true;
           console.log(this.chartsData, this.mapData, this.graphData);
-
           // console.log(this.extractRoundChartData('gender'));
         }
       );
   }
 
   /* creates array of data objects for main chart */
+  // extractMainChartData(): any[] {
+  //   const dataValues = {};
+  //   const datesDiffInDays = moment(this.dates.to).diff(this.dates.from, 'days') + 1;
+
+  //   return Array.from(Array(datesDiffInDays).keys()).map(i => {
+  //     const day = moment(this.dates.from).add(i, 'day');
+  //     const dayFormatted = day.format('YYYY-MM-DD');
+
+  //     this.graphData.available_types.forEach(type => {
+  //       const value = this.graphData.range_report[dayFormatted]
+  //         && this.graphData.range_report[dayFormatted][type]
+  //         && this.graphData.range_report[dayFormatted][type].requests_count || 0;
+  //         dataValues[type] = value;
+  //     });
+
+  //     return { ...dataValues, date: dayFormatted };
+  //   });
+  // }
+
+  /* creates array of data objects for main chart */
+  // extractMainChartData(): {key: string, values: {date: string, callsCount: number}[]}[] {
   extractMainChartData(): any[] {
-    const dataValues = {};
+    // number of days between two dates
     const datesDiffInDays = moment(this.dates.to).diff(this.dates.from, 'days') + 1;
 
-    return Array.from(Array(datesDiffInDays).keys()).map(i => {
-      const day = moment(this.dates.from).add(i, 'day');
-      const dayFormatted = day.format('YYYY-MM-DD');
+    return this.graphData.available_types.map(type => {
+      let dataItem = { key: type, values: [] };
 
-      this.graphData.available_types.forEach(type => {
-        const value = this.graphData.range_report[dayFormatted]
+      // create array of "datesDiffInDays" elements and iterate through each day
+      Array.from(Array(datesDiffInDays).keys()).map(i => {
+        const day = moment(this.dates.from).add(i, 'day');
+        const dayFormatted = day.format('YYYY-MM-DD');
+        const dayCallsCount = this.graphData.range_report[dayFormatted]
           && this.graphData.range_report[dayFormatted][type]
           && this.graphData.range_report[dayFormatted][type].requests_count || 0;
-          dataValues[type] = value;
+
+        dataItem.values.push({ date: +day, callsCount: dayCallsCount });
       });
 
-      return { ...dataValues, date: dayFormatted };
+      return dataItem;
     });
   }
 

@@ -10,6 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { MyDatePickerModule } from 'mydatepicker';
 // AmCharts module https://github.com/amcharts/amcharts3-angular2
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
+// NvD3Module module https://github.com/krispo/ng2-nvd3
+import { NvD3Module } from 'ng2-nvd3';
+import 'd3'; // NvD3Module dependency
+import 'nvd3'; // NvD3Module dependency
 
 /*--------------------- Components ---------------------*/
 import { AppComponent } from './components/app.component';
@@ -41,7 +45,8 @@ import { RoundChartComponent } from './components/dashboard/round-chart/round-ch
     HttpModule,
     AppRoutingModule,
     MyDatePickerModule,
-    AmChartsModule
+    AmChartsModule,
+    NvD3Module
   ],
   providers: [
     HttpService,

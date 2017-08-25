@@ -24,9 +24,12 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
+    "d3": "^3.5.17",
     "moment": "^2.18.1",
     "mydatepicker": "^2.0.26",
+    "ng2-nvd3": "^2.0.0",
     "normalize.css": "^7.0.0",
+    "nvd3": "^1.8.6",
     "rxjs": "^5.4.1",
     "zone.js": "^0.8.14"
   },
