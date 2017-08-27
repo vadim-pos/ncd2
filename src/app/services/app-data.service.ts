@@ -26,7 +26,7 @@ export class AppDataService {
 
   /* ----- fetching / getting profile data ----- */
 
-  fetchProfileData(): Observable<Profile> | null {
+  fetchProfileData(): Observable<Profile> | Observable<null> {
     return this.httpService.get(ApiEndpoints.PROFILE_DATA)
       .map((res: Response) => this.profileData = res.json())
       .catch((err: Response) => {

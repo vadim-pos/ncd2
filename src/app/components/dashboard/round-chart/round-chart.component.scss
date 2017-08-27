@@ -1,0 +1,8 @@
+:host {
+  display: inline-block;
+  width: 20%;
+}
+
+:host /deep/ div a {
+  display: none !important;
+}

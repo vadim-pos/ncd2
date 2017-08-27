@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { AmChartsService } from "@amcharts/amcharts3-angular";
 
 @Component({
   selector: 'app-main-chart',
   template: `
-    <div #chartContainer class="chart-container" (mousemove)="setBalloonPosition(balloon, chartContainer, $event)" (mouseleave)="balloonIsVisible=false" [style.position]="'relative'">
+    <div #chartContainer (mousemove)="setBalloonPosition(balloon, chartContainer, $event)" (mouseleave)="balloonIsVisible=false" [style.position]="'relative'">
       <div id="main-chart" [style.width.%]="99" [style.height.px]="500"></div>
-      <div #balloon [class.visible]="balloonIsVisible" class="balloon" [ngStyle]="balloonStyles">
+      <div #balloon class="balloon" [class.visible]="balloonIsVisible" [ngStyle]="balloonStyles">
         <div class="balloon-header">{{selectedCursorData ? selectedCursorData.date : ''}}</div>
         <table class="balloon-table">
-          <tr class="balloon-table-item"
+          <tr class="balloon-item"
               *ngFor="let type of availableTypesOrdered"
               [class.selected]="selectedGraphItem && selectedGraphItem === type"
               [style.background] = "selectedGraphItem === type ? planColorsMap[type] : ''"
               >
-            <td class="balloon-table-cell marker-cell"><span class="marker" [style.background]="planColorsMap[type]"></span></td>
-            <td class="balloon-table-cell type-cell">{{chartPlanNamesMap[type]}}</td>
-            <td class="balloon-table-cell value-cell">{{selectedCursorData ? selectedCursorData[type] : ''}}</td>
+            <td class="balloon-cell marker-cell"><span class="balloon-marker" [style.background]="planColorsMap[type]"></span></td>
+            <td class="balloon-cell type-cell">{{chartPlanNamesMap[type]}}</td>
+            <td class="balloon-cell value-cell">{{selectedCursorData ? selectedCursorData[type] : ''}}</td>
           </tr>
         </table>
       </div>
@@ -95,12 +95,13 @@ export class MainChartComponent implements OnInit, OnDestroy {
 
     const graphs = this.availableTypesOrdered.map((type, index) => ({
       "showBalloon": false,
+      "type": "smoothedLine",
       "bullet": "round",
       "bulletSize": 6,
       "fillAlphas": 0.4,
       "id": `graph-${index}`,
       "valueField": type,
-      "title": this.chartPlanNamesMap[type],
+      "title": this.chartPlanNamesMap[type]
     }));
 
     return {
@@ -115,7 +116,7 @@ export class MainChartComponent implements OnInit, OnDestroy {
       "startDuration": 0.6,
       "fontSize": 13,
       "theme": "default",
-      "categoryAxis": { "gridPosition": "start", "parseDates": true, "autoGridCount": true, "fontSize": 11 },
+      "categoryAxis": { "gridPosition": "start", "parseDates": true, "equalSpacing": true,  "autoGridCount": true, "fontSize": 11, "startOnAxis": true },
       "trendLines": [],
       "guides": [],
       graphs,
@@ -145,7 +146,7 @@ export class MainChartComponent implements OnInit, OnDestroy {
 
     /* if balloon element overflows bottom border of chart container */
     if (e.offsetY + balloonElement.offsetHeight + 10 > chartContainerElement.offsetHeight) {        
-      top -= (e.offsetY + balloonElement.offsetHeight + 10) - chartContainerElement.offsetHeight;
+      top -= (e.offsetY + balloonElement.offsetHeight) - chartContainerElement.offsetHeight;
     }
     /* if balloon element overflows top border of chart container */
     if (e.offsetY - balloonElement.offsetHeight / 2 - 10 < 0) {

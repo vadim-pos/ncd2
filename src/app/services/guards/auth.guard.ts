@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.userIsAuthenticated()) {
-      console.log('token found');
       return true;
     } else {
+      this.router.navigate(['/error']);
       return false;
     }
   }

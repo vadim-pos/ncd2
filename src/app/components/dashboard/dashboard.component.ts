@@ -107,7 +107,6 @@ export class DashboardComponent implements OnInit {
       this.roundChartsMap[chartType].values.forEach((value, i, arr) => {
         const dataValue = chartData.values[value];
         const totalCount = chartData.calls_count;
-
         extractedData[value] = extractedData[value] ? extractedData[value] + dataValue : dataValue;
         // if chart data contains only one item - set second item as 'other' with value of total calls count for this data type
         if (arr.length === 1) {
@@ -115,7 +114,6 @@ export class DashboardComponent implements OnInit {
         }
       });
     });
-    
     return extractedData;
   }
 
