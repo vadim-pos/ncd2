@@ -1,86 +1,46 @@
-.nvd3 g.nv-groups path.nv-line {
-  // stroke-width: 2px;
-}
+/* ------ Extending NVD3 styles ------ */
 
-.nvd3 g.nv-groups .nv-point {
-  stroke-opacity: 1!important;
-  stroke-width: 2px!important;
-  fill-opacity: 1!important;
-}
-
-.nvd3 g.nv-groups .nv-point.hover {
-  animation: am-pulsating .8s infinite;
-  // stroke-opacity: 1!important;
-  // stroke-width: 12px!important;
-  // fill-opacity: 1!important;
-}
-
-@keyframes am-pulsating {
-  0% {
-    stroke-opacity: 1;
-    stroke-width: 0px;
-  }
-  100% {
-    stroke-opacity: 0;
-    stroke-width: 10px;
-  }
-}
-
-
-// .chart-container {
-//   max-width: 1350px;
-//   padding: 0 15px;
-//   margin: 0 auto;
+// :host /deep/ .nv-area {
+//   fill-opacity: .3;
 // }
 
-// .balloon {
-//   display: inline-block;
-//   visibility: hidden;
-//   opacity: 0;
-//   pointer-events: none;
-//   overflow: hidden;
-//   font-size: 13px;
-//   background-color: #fff;
-//   border-radius: 5px;
-//   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-//   // box-shadow: 0 10px 20px rgba(0,0,0, 0.19), 0 6px 6px rgba(0,0,0, 0.23);
-//   transition: opacity .4s ease-in;
-//   &.visible {
-//     visibility: visible;
-//     opacity: 1;
+// :host /deep/ .nvd3 g.nv-groups path.nv-line {
+//   // stroke-width: 2px;
+// }
+
+// :host /deep/ .nvd3 g.nv-groups .nv-point {
+//   stroke-opacity: 1!important;
+//   stroke-width: 2px!important;
+//   fill-opacity: 1!important;
+// }
+
+// :host /deep/ .nvd3 g.nv-groups .nv-point.hover {
+//   animation: am-pulsating 1.4s infinite;
+// }
+
+// // @keyframes am-pulsating {
+//   // 0% {
+//     // stroke-opacity: 1;
+//     // stroke-width: 0px;
+//   // }
+//   // 100% {
+//     // stroke-opacity: 0;
+//     // stroke-width: 10px;
+//   // }
+// // }
+
+// @keyframes am-pulsating {
+//   0%, 100% {
+//     // stroke-opacity: 1;
+//     stroke-width: 2px;
+//   }
+//   50% {
+//     // stroke-opacity: 0;
+//     stroke-width: 5px;
 //   }
 // }
 
-// .balloon-header {
-//   padding: 4px 0 4px 10px;
-//   font-weight: 500;
-// }
-
-// .balloon-table {
-//   margin-bottom: 10px;
-//   border-collapse: collapse;
-// }
-
-// .balloon-table-item {
-//   transition: background .2s linear, color .1s linear;
-//   &.selected {
-//     color: #fff;
-//     .marker { border-radius: 50%; }
-//   }
-// }
-
-// .balloon-table-cell {
-//   padding-right: 10px;
-//   padding-top: 2px;
-//   padding-bottom: 2px;
-//   &.marker-cell { padding-left: 10px; } 
-//   &.value-cell { font-weight: 500; }
-// }
-
-// .marker {
-//   display: block;
-//   width: 12px;
-//   height: 12px;
-//   border: 1px solid #fff;
-//   transition: border-radius .2s linear;
-// }
+.nvtooltip {
+  background: #fff;
+  border-radius: 0;
+}
