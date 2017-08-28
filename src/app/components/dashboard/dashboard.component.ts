@@ -23,12 +23,12 @@ import { Profile, ChartsData, GraphData, MapData } from '../../interfaces';
       </div>
     </form>
 
-    <app-main-chart *ngIf="chartsDataLoaded" [availablePlanTypes]="graphData.available_types" [chartData]="extractMainChartData()"></app-main-chart>
+    <app-main-chart *ngIf="chartsDataLoaded" [graphData]="graphData" [dates]="dates"></app-main-chart>
     
     <div *ngIf="chartsDataLoaded" class="small-charts-wrapper">
-      <app-round-chart *ngFor="let type of roundChartsTypes" [chartID]="type" [chartData]="extractRoundChartData(type)"></app-round-chart>
     </div>
   `,
+      // <app-round-chart *ngFor="let type of roundChartsTypes" [chartID]="type" [chartData]="extractRoundChartData(type)"></app-round-chart>
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
@@ -74,26 +74,6 @@ export class DashboardComponent implements OnInit {
           // console.log(this.extractRoundChartData('gender'));
         }
       );
-  }
-
-  /* creates array of data objects for main chart */
-  extractMainChartData(): any[] {
-    const dataValues = {};
-    const datesDiffInDays = moment(this.dates.to).diff(this.dates.from, 'days') + 1;
-
-    return Array.from(Array(datesDiffInDays).keys()).map(i => {
-      const day = moment(this.dates.from).add(i, 'day');
-      const dayFormatted = day.format('YYYY-MM-DD');
-
-      this.graphData.available_types.forEach(type => {
-        const value = this.graphData.range_report[dayFormatted]
-          && this.graphData.range_report[dayFormatted][type]
-          && this.graphData.range_report[dayFormatted][type].requests_count || 0;
-          dataValues[type] = value;
-      });
-
-      return { ...dataValues, date: dayFormatted };
-    });
   }
 
   /* creates data object for round chart of specific type */

@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /*--------------------- Vendor Modules ---------------------*/
 // Datepicker module 'mydatepicker', source: https://github.com/kekeh/mydatepicker 
@@ -41,7 +43,9 @@ import { RoundChartComponent } from './components/dashboard/round-chart/round-ch
     HttpModule,
     AppRoutingModule,
     MyDatePickerModule,
-    AmChartsModule
+    AmChartsModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HttpService,

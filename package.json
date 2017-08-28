@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {
     "@amcharts/amcharts3-angular": "^1.2.1",
-    "@angular/animations": "^4.0.0",
+    "@angular/animations": "^4.3.6",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -23,7 +23,9 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "@swimlane/ngx-charts": "^6.0.2",
     "core-js": "^2.4.1",
+    "d3": "^4.10.0",
     "moment": "^2.18.1",
     "mydatepicker": "^2.0.26",
     "normalize.css": "^7.0.0",
