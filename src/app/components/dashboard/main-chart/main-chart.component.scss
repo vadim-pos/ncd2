@@ -1,4 +1,42 @@
+/* WARNING: VIEW ENCAPSULATION FOR THIS COMPONENT IS DISABLED */
+/* ---------------------------------------------------------- */
+
 /* ------ Extending NVD3 styles ------ */
+.main-chart {
+  .nv-area {
+    fill-opacity: .4;
+  }
+  .nvd3 g.nv-groups .nv-point {
+    stroke-opacity: 1!important;
+    stroke-width: 2px!important;
+    fill-opacity: 1!important;
+  }
+  .nvd3 g.nv-groups .nv-point.hover {
+    animation: am-pulsating 1.4s infinite;
+  }
+}
+
+.nvtooltip {
+  background: #fff;
+  border-width: 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: opacity .2s ease-in-out;
+  color: #212121;
+}
+
+.nvtooltip table td.legend-color-guide div {
+  border: 1px solid #fff;
+}
+
+@keyframes am-pulsating {
+  0%, 100% {
+    stroke-width: 2px;
+  }
+  50% {
+    stroke-width: 4px;
+  }
+}
 
 // :host /deep/ .nv-area {
 //   fill-opacity: .3;
@@ -39,8 +77,3 @@
 //     stroke-width: 5px;
 //   }
 // }
-
-.nvtooltip {
-  background: #fff;
-  border-radius: 0;
-}
